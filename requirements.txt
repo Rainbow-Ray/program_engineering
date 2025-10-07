@@ -1,0 +1,6 @@
+PIL
+skimage
+numpy
+torch
+transformers
+torchvision.transforms.functional
