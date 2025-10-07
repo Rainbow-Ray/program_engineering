@@ -114,6 +114,7 @@ if st.button('Вырезать фон'):
         # st.image(res)
         st.image(res)
 
+
         # bytes_data = uploaded_file.getvalue()
         # st.write(bytes_data)
         # To convert to a string based IO:
@@ -129,3 +130,5 @@ if st.button('Вырезать фон'):
         # st.image(res)
 
 
+uploaded_file = None
+res = None
