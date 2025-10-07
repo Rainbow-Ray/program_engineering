@@ -17,7 +17,6 @@ from transformers import AutoModelForImageSegmentation
 from torchvision.transforms.functional import normalize
 
 
-model = AutoModelForImageSegmentation.from_pretrained("briaai/RMBG-1.4",trust_remote_code=True)
 
 def preprocess_image(im: np.ndarray, model_input_size: list) -> torch.Tensor:
     if len(im.shape) < 3:
@@ -74,6 +73,7 @@ def prepare_input (path:str):
 #     return no_bg_image
 
 def io_file_input(orig_im, bytes_data):
+    model = AutoModelForImageSegmentation.from_pretrained("briaai/RMBG-1.4", trust_remote_code=True)
     orig_im_size = orig_im.shape[0:2]
     model_input_size = [1024, 1024]
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
