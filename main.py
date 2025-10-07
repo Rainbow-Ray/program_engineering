@@ -63,16 +63,3 @@ def io_file_input(file_object):
     no_bg_image = orig_image.copy()
     no_bg_image.putalpha(pil_mask_im)
     return no_bg_image
-
-import streamlit as st
-from io import BytesIO
-
-st.title('Удаление фона на фото')
-uploaded_file = st.file_uploader(label='Загрузите фотографию:', type=["jpg", "jpeg", "png"])
-if st.button('Вырезать фон'):
-    if uploaded_file is not None:
-
-        stringio = BytesIO(uploaded_file.getvalue())
-        st.write(stringio)
-        res = io_file_input(stringio)
-        st.image(res)
