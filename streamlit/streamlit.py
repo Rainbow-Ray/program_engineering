@@ -4,7 +4,7 @@ import streamlit as st
 import importlib.util
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.parent))
-import main
+from main import io_file_input
 
 
 st.title('Удаление фона на фото')
@@ -12,11 +12,8 @@ uploaded_file = st.file_uploader(label='Загрузите фотографию:
 if st.button('Вырезать фон'):
     if uploaded_file is not None:
         bytes_data = uploaded_file.getvalue()
-
-
-
-        stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
-        res = main.io_file_input(stringio)
+        stringio = StringIO(uploaded_file.getvalue())
+        res = io_file_input(stringio)
         st.image(res)
 
 

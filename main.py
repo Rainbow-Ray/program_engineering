@@ -63,6 +63,6 @@ def io_file_input(orig_im):
     return no_bg_image
 
 
-prepare_input("cat_walking.jpg")
-prepare_input("girafe.jpg")
-prepare_input("dog_fight.jpg")
+# prepare_input("cat_walking.jpg")
+# prepare_input("girafe.jpg")
+# prepare_input("dog_fight.jpg")
