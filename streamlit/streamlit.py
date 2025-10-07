@@ -103,31 +103,32 @@ def ass(img):
 
 st.title('Удаление фона на фото')
 uploaded_file = st.file_uploader(label='Загрузите фотографию:', type=["jpg", "jpeg", "png"])
-if st.button('Вырезать фон'):
-    if uploaded_file is not None:
+with st.empty():
+    if st.button('Вырезать фон'):
 
-        bytes_data = uploaded_file.getvalue()
-        image = Image.open(BytesIO(bytes_data))
-        a = np.asarray(image)
-        img = ass(a)
-        res = io_file_input(img, bytes_data)
-        # st.image(res)
-        st.image(res)
+        if uploaded_file is not None:
 
-
-        # bytes_data = uploaded_file.getvalue()
-        # st.write(bytes_data)
-        # To convert to a string based IO:
+            bytes_data = uploaded_file.getvalue()
+            image = Image.open(BytesIO(bytes_data))
+            a = np.asarray(image)
+            img = ass(a)
+            res = io_file_input(img, bytes_data)
+            st.image(res)
 
 
-        # To read file as string:
-        # string_data = stringio.read()
-        # st.write(string_data)
+            # bytes_data = uploaded_file.getvalue()
+            # st.write(bytes_data)
+            # To convert to a string based IO:
 
-        # Can be used wherever a "file-like" object is accepted:
 
-        # res = io_file_input(stringio)
-        # st.image(res)
+            # To read file as string:
+            # string_data = stringio.read()
+            # st.write(string_data)
+
+            # Can be used wherever a "file-like" object is accepted:
+
+            # res = io_file_input(stringio)
+            # st.image(res)
 
 
 uploaded_file = None
