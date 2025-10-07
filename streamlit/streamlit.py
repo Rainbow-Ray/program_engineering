@@ -37,8 +37,6 @@ def postprocess_image(result: torch.Tensor, im_size: list)-> np.ndarray:
     im_array = np.squeeze(im_array)
     return im_array
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-model.to(device)
 
 def show_image(path:str):
   img = Image.open(path)
@@ -78,7 +76,9 @@ def prepare_input (path:str):
 def io_file_input(orig_im, bytes_data):
     orig_im_size = orig_im.shape[0:2]
     model_input_size = [1024, 1024]
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     image = preprocess_image(orig_im, model_input_size).to(device)
+    model.to(device)
     result = model(image)
     result_image = postprocess_image(result[0][0], orig_im_size)
     pil_mask_im = Image.fromarray(result_image)
