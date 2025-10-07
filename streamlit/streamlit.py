@@ -14,6 +14,7 @@ if st.button('Вырезать фон'):
         bytes_data = uploaded_file.getvalue()
 
 
+
         stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
         res = main.io_file_input(stringio)
         st.image(res)
