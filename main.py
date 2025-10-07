@@ -50,15 +50,14 @@ def prepare_input (path:str):
   no_bg_image.putalpha(pil_mask_im)
   no_bg_image.show()
 
-def io_file_input(orig_im):
-    orig_im = io.imread(orig_im, plugin='imageio')
+def io_file_input(orig_im, bytes_data):
     orig_im_size = orig_im.shape[0:2]
     model_input_size = [1024, 1024]
     image = preprocess_image(orig_im, model_input_size).to(device)
     result = model(image)
     result_image = postprocess_image(result[0][0], orig_im_size)
     pil_mask_im = Image.fromarray(result_image)
-    orig_image = Image.open(orig_im)
+    orig_image = Image.open(io.BytesIO(bytes_data))
     no_bg_image = orig_image.copy()
     no_bg_image.putalpha(pil_mask_im)
     return no_bg_image
