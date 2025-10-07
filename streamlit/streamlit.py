@@ -78,7 +78,7 @@ def io_file_input(orig_im, bytes_data):
     model_input_size = [1024, 1024]
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     image = preprocess_image(orig_im, model_input_size).to(device)
-    model.to(device)
+    model.to_empty(device)
     result = model(image)
     result_image = postprocess_image(result[0][0], orig_im_size)
     pil_mask_im = Image.fromarray(result_image)
