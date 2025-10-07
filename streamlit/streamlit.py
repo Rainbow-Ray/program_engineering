@@ -16,6 +16,9 @@ import torch.nn.functional as F
 from transformers import AutoModelForImageSegmentation
 from torchvision.transforms.functional import normalize
 
+model = AutoModelForImageSegmentation.from_pretrained("briaai/RMBG-1.4", trust_remote_code=True)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+model.to(device)
 
 
 def preprocess_image(im: np.ndarray, model_input_size: list) -> torch.Tensor:
@@ -50,7 +53,7 @@ def prepare_input (path:str):
   orig_im_size = orig_im.shape[0:2]
   model_input_size = [1024, 1024]
   image = preprocess_image(orig_im, model_input_size).to(device)
-  result=model(image)
+  result= model(image)
   result_image = postprocess_image(result[0][0], orig_im_size)
   pil_mask_im = Image.fromarray(result_image)
   orig_image = Image.open(path)
@@ -73,12 +76,9 @@ def prepare_input (path:str):
 #     return no_bg_image
 
 def io_file_input(orig_im, bytes_data):
-    model = AutoModelForImageSegmentation.from_pretrained("briaai/RMBG-1.4", trust_remote_code=True)
     orig_im_size = orig_im.shape[0:2]
     model_input_size = [1024, 1024]
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     image = preprocess_image(orig_im, model_input_size).to(device)
-    model.to_empty(device)
     result = model(image)
     result_image = postprocess_image(result[0][0], orig_im_size)
     pil_mask_im = Image.fromarray(result_image)
