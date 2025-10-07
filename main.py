@@ -51,6 +51,7 @@ def prepare_input (path:str):
   no_bg_image.show()
 
 def io_file_input(orig_im):
+    orig_im = io.imread(orig_im, plugin='imageio')
     orig_im_size = orig_im.shape[0:2]
     model_input_size = [1024, 1024]
     image = preprocess_image(orig_im, model_input_size).to(device)
