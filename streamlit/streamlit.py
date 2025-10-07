@@ -54,33 +54,25 @@ def io_file_input(file_object):
     file_data = file_object.getvalue()
     new_bytes_io = BytesIO(file_data)
 
-    # Открываем изображение из нового BytesIO
     orig_image = Image.open(new_bytes_io)
-
-    # Конвертируем в numpy array для модели
     orig_im = np.array(orig_image)
 
-    # Если есть альфа-канал, убираем его
     if orig_im.shape[-1] == 4:
         orig_im = orig_im[..., :3]
 
     orig_im_size = orig_im.shape[0:2]
     model_input_size = [1024, 1024]
 
-    # Обработка через модель
     image = preprocess_image(orig_im, model_input_size).to(device)
     with torch.no_grad():
         result = model(image)
     result_image = postprocess_image(result[0][0], orig_im_size)
 
-    # Создаем маску
     pil_mask_im = Image.fromarray(result_image)
 
-    # Создаем новый BytesIO для результата
     new_bytes_io_result = BytesIO(file_data)
     orig_image_rgba = Image.open(new_bytes_io_result).convert("RGBA")
 
-    # Применяем маску
     no_bg_image = orig_image_rgba.copy()
     no_bg_image.putalpha(pil_mask_im)
     return no_bg_image
