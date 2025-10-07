@@ -1,5 +1,4 @@
 from PIL import Image
-from PIL._imaging import display
 from skimage import io
 import numpy as np
 import torch
