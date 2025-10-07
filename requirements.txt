@@ -1,6 +1,6 @@
-PIL
-skimage
+pillow
+scikit-image
 numpy
 torch
 transformers
-torchvision.transforms.functional
+torchvision
